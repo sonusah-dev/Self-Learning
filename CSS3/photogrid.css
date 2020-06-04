@@ -4,8 +4,13 @@ img{
     width: 30%;
     margin:1.66%;
 }
-h2{
-    margin-left: 20px;
-    color: blue;
-    font-weight: 500;
+p{
+    margin-left: 1.66%;
+    font-size: 35px;
+    color:lightslategray;
+    text-transform: uppercase;
+    font-family: Rokkitt;
+    border-bottom: 3px solid lightslategrey;
+    padding-bottom: 20px;
+    width: 96.68%;
 }
