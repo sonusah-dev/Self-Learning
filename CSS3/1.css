@@ -1,0 +1,42 @@
+body{
+    /* background:url("blackpanther.jpg"); */
+    background-size: cover;
+}
+.acting{
+    border-style: ridge;
+    border-radius: 5px;
+    margin:50px;
+    height: 30px;
+    width: 300px;
+    font-size: 25px;
+    padding-left: 10px;
+    
+}
+[type="button"]{
+    align-items: center;
+    color:black;
+    border-radius: 5px;
+    height: 35px;
+    width: 100px;
+    margin-left: 150px;
+    border-style: unset;
+    font-family:monospace;
+    font-size:20px;
+    background-color: rgb(7, 207, 197);
+    
+}
+input:checked{
+    margin-left: 50px;
+}
+
+p::first-letter{
+    color:blueviolet;
+    font-size: 110px;
+}
+
+label{
+    text-transform: uppercase;
+}
+[type="button"]:hover{
+  color:yellow;  
+}
