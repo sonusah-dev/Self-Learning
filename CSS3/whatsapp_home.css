@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #d9dbda;
+}
+
+.header {
+  height: 220px;
+  background-color: #25ba81;
+}
+
+.title h5 {
+  font-size: 30px;
+}
+.header .title h5 span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* /nsekfhskd======== */
+.content-box {
+  height: 600px;
+  margin-top: -120px;
+}
+
+.whatsapp-card {
+  height: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 5rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
+  -webkit-box-shadow: -4px 10px 19px -10px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -4px 10px 19px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: -4px 10px 19px -10px rgba(0, 0, 0, 0.75);
+}
+.first {
+  height: 50%;
+}
+.second {
+  height: 50%;
+  background-color: #f2f7f5;
+  display: flex;
+  justify-content: center;
+}
+.image {
+  height: 100%;
+  width: 100%;
+  padding: 25px 200px;
+}
+.mid {
+  display: flex;
+  justify-content: center;
+}
+.pad {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
