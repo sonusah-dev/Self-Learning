@@ -78,7 +78,6 @@ for (var i = 0; i < square.length; i++) {
   square[i].style.backgroundColor = color[i];
   // add click listener to square
   square[i].addEventListener("click", function () {
-    console.log(this.style.backgroundColor);
     //   store color that is bieng clicked
     var clickedColor = this.style.backgroundColor;
     // Compare color with target color to match
