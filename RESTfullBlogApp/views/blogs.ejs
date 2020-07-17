@@ -1,0 +1,23 @@
+<%- include ('partials/header') %>
+<% blogs.forEach((blog) => { %>
+<div class="ui main text container segment">
+    <div class="card">
+        <div class="content">
+            <img class="left floated small ui image" src="<%= blog.image %>" alt="blog-Image">
+            <div class="header">
+                <h2><%= blog.title %></h2>
+            </div>
+            <div class="meta">
+                <strong><%= blog.date.toLocaleString() %></strong>
+            </div>
+            <div class="description">
+                <p><%= blog.comment %></p>
+            </div>
+        </div>
+        <div class="extra content">
+            <a class="medium ui blue basic button" href="/blogs/<%= blog._id %>">Read More</a>
+        </div>
+    </div>
+</div>
+<% }); %>
+<%- include ('partials/footer') %>

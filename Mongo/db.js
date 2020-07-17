@@ -7,14 +7,15 @@ var studentSchema = new mongoose.Schema({
     city: String
 });
 
+
 var students = mongoose.model("students", studentSchema);
+
 
 var query = new students({
     name: "Rohit Gupta",
     age: 22,
     city: "Jorhat"
 });
-
 query.save((error, students) => {
     if (error) {
         console.log("Something went wrong");
@@ -23,6 +24,7 @@ query.save((error, students) => {
         console.log(students);
     }
 });
+
 
 students.create({
     name: "Munmun Kumar",
