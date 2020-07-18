@@ -1,18 +1,22 @@
 // DEPENDENCIES FOR OUR APP
 const bodyParser = require('body-parser'),
+    methodOverride = require('method-override'),
+    expressSantizer = require('express-sanitizer'),
     mongoose = require('mongoose'),
     express = require('express'),
     app = express();
 
 // BASIC APP CONFIGURATION
-app.set("view engine", "ejs");
-app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+app.use(expressSantizer());
+app.use(methodOverride("_method"));
+app.set("view engine", "ejs");
 
 // CONNECTING WITH MONGO SERVER
-mongoose.connect("mongodb://localhost:27017/blogDb", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/blogDb", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
-//  SCHEMA SETUP FOR BLOG DB
+//  SCHEMA CONFIG FOR BLOG DB
 var blogSchema = new mongoose.Schema({
     title: String,
     image: String,
@@ -23,30 +27,14 @@ var blogSchema = new mongoose.Schema({
 // CREATING BLOG-DB COLLECTION AND INSTANCE FOR MANIPUATION
 const Blog = mongoose.model("blogs", blogSchema);
 
-// INSERTING TEMPORARY BLOG DATA FOR TESTING
-// Blog.create(
-//     {
+/////////////////////////// RESTful CONVENTION OF ROUTING APPLICATION ///////////////////////////
 
-//         title: "Jorhat Supermarket",
-//         image: "https://img.republicworld.com/republic-prod/stories/promolarge/xxhdpi/ql1jkgxwu3hcpotz_1587036063.jpeg?tr=w-812,h-464",
-//         comment: "This is biggest supermarket in Assam where all kinds of essentials are provided",
-
-//     }, (err, blogs) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log("Newly Created blogs");
-//             console.log(blogs);
-//         }
-//     }
-// );
-
-// INDEX----BLOG ROUTE
+// LANDING----BLOG ROUTE
 app.get("/", (req, res) => {
     res.redirect("blogs");
 });
 
-// GET---BLOG ROUTE
+// INDEX---BLOG ROUTE
 app.get("/blogs", (req, res) => {
     Blog.find({}, (error, blogResults) => {
         if (error) {
@@ -57,14 +45,16 @@ app.get("/blogs", (req, res) => {
     })
 });
 
-// CREATE---BLOG POST ROUTE
+// NEW---BLOG ROUTE
 app.get("/blogs/new", (req, res) => {
     res.render("new");
 });
 
-// POST---BLOG ROUTE
+// CREATE---BLOG ROUTE
 app.post("/blogs", (req, res) => {
-    Blog.create(req.body.blogs, (error, newblog) => {
+    // SANITIZING BEFORE INSERTING DATA
+    req.body.blogs.body = req.sanitize(req.body.blogs.body);
+    Blog.create(req.body.blogs, (error) => {
         if (error) {
             console.log(error);
         } else {
@@ -84,9 +74,43 @@ app.get("/blogs/:id", (req, res) => {
     })
 });
 
+// EDIT---BLOG ROUTE
+app.get("/blogs/:id/edit", (req, res) => {
+    Blog.findById(req.params.id, (error, foundblog) => {
+        if (error) {
+            console.log(error);
+        } else {
+            res.render("edit", { blog: foundblog });
+        }
+    })
+});
 
-// PORT AND SERVER INFO
+// UPDATE---BLOG ROUTE
+app.put("/blogs/:id", (req, res) => {
+    // SANITIZING BEFORE UPDATING DATA
+    req.body.blogs.body = req.sanitize(req.body.blogs.body);
+    Blog.findByIdAndUpdate(req.params.id, req.body.blogs, (error) => {
+        if (error) {
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs/" + req.params.id);
+        }
+    })
+});
+
+// DELETE---BLOG ROUTE
+app.delete("/blogs/:id", (req, res) => {
+    Blog.findByIdAndRemove(req.params.id, (error) => {
+        if (error) {
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs");
+        }
+    })
+});
+
+/////////////////////////// PORT AND SERVER CONFIG ///////////////////////////
+
 app.listen(3000, () => {
-    console.log("Yelpcamp server has started!");
-    console.log('Listening to port 3000');
+    console.log("Blog App server is running on port:3000");
 });

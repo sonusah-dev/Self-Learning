@@ -8,9 +8,12 @@
                 <h3><%= blog.date.toDateString() %></h3>
             </div>
             <div class="description">
-                <p><%= blog.comment %></p>
+                <p><%- blog.comment %></p>
             </div>
-            <a class="large ui blue basic button" href="/blogs">Back</a>
+            <a class="ui blue basic button" href="/blogs/<%= blog._id %>/edit">Edit</a>
+            <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+                <button class="ui red basic button">Delete</button>
+            </form>
         </div>
     </div>
 </div>
