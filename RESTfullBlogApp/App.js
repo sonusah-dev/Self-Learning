@@ -53,7 +53,7 @@ app.get("/blogs/new", (req, res) => {
 // CREATE---BLOG ROUTE
 app.post("/blogs", (req, res) => {
     // SANITIZING BEFORE INSERTING DATA
-    req.body.blogs.body = req.sanitize(req.body.blogs.body);
+    // req.body.blogs.body = req.sanitize(req.body.blogs.body);
     Blog.create(req.body.blogs, (error) => {
         if (error) {
             console.log(error);
@@ -88,7 +88,7 @@ app.get("/blogs/:id/edit", (req, res) => {
 // UPDATE---BLOG ROUTE
 app.put("/blogs/:id", (req, res) => {
     // SANITIZING BEFORE UPDATING DATA
-    req.body.blogs.body = req.sanitize(req.body.blogs.body);
+    // req.body.blogs.body = req.sanitize(req.body.blogs.body);
     Blog.findByIdAndUpdate(req.params.id, req.body.blogs, (error) => {
         if (error) {
             res.redirect("/blogs");

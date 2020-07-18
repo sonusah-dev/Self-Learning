@@ -1,16 +1,20 @@
+// MONGOOSE DEPENDENCIES
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/demo");
 
+//  CONNECTING WITH MONGODB
+mongoose.connect("mongodb://localhost:27017/demo", { useNewUrlParser: true, useUnifiedTopology: true });
+
+// SCHEMA CONFIG FOR DB
 var studentSchema = new mongoose.Schema({
     name: String,
     age: Number,
     city: String
 });
 
-
+// CREATING DB COLLECTION FOR INSTANCE
 var students = mongoose.model("students", studentSchema);
 
-
+// INSERTING DATA IN TABLE USING SAVE METHOD
 var query = new students({
     name: "Rohit Gupta",
     age: 22,
@@ -25,7 +29,7 @@ query.save((error, students) => {
     }
 });
 
-
+// CREATE METHOD FOR INSERTING DATA
 students.create({
     name: "Munmun Kumar",
     age: 23,
@@ -39,6 +43,7 @@ students.create({
     }
 });
 
+// FIND METHOD FOR GETTING DATA FROM DB
 students.find({}, (error, students) => {
     if (error) {
         console.log("Something went wrong");
@@ -47,3 +52,4 @@ students.find({}, (error, students) => {
         console.log(students);
     }
 });
+

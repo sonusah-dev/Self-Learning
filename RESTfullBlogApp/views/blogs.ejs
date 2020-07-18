@@ -14,10 +14,10 @@
                         <span><strong><%= blog.date.toDateString() %></strong></span>
                     </div>
                     <div class="description">
-                        <p><%= blog.comment.substring(0,100) %>...</p>
+                        <p><%- blog.comment.substring(0,100) %>...</p>
                     </div>
                     <div class="extra">
-                        <a class="medium ui green basic button" href="/blogs/<%= blog._id %>">
+                        <a class="large ui inverted purple button" href="/blogs/<%= blog._id %>">
                             Read More <i class="caret right icon"></i>
                         </a>
                     </div>
