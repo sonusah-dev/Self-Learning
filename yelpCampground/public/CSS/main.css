@@ -1,0 +1,18 @@
+#length{
+    height: 175px;
+}
+.list-group-item.active{
+    background-color: #17a2b8;
+    border-color:#17a2b8;
+}
+.topMargin{
+    margin: 100px auto;
+    max-width: 40%;
+    text-align: center;
+}
+.colorBack{
+    background-color:rgb(242, 248, 253) 
+}
+#max{
+    max-height: 500px;
+}
