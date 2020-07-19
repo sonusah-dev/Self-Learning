@@ -4,6 +4,9 @@ const express = require('express'),
     bodyparser = require('body-parser'),
     mongoose = require('mongoose'),
     connection = require('./public/connection'),
+    passport = require('passport'),
+    localStrategy = require('passport-local'),
+    user = require('./models/users'),
     campgrounds = require('./models/campgrounds'),
     comments = require('./models/comments'),
     seedDb = require('./seed');
@@ -16,6 +19,25 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 seedDb();
 
+// ================================
+// PASSPORT IMPORTANT CONFIGURATION
+// ================================
+app.use(require('express-session')({
+    secret: "Knowledge is power",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
+
+// PROVIDING CURRENTUSER DETAILS FOR ALL ROUTES
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // LANDING--ROUTES
 app.get("/", (req, res) => {
@@ -29,7 +51,7 @@ app.get("/campground", (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            res.render("campgrounds/campground", { campgrounds: allCampgrounds });
+            res.render("campgrounds/campground", { campgrounds: allCampgrounds, currentUser: req.user });
         }
     });
 });
@@ -80,7 +102,7 @@ app.get("/campground/:id", (req, res) => {
 
 
 // NEW--COMMENT ROUTES
-app.get("/campground/:id/comment/new", (req, res) => {
+app.get("/campground/:id/comment/new", isLoggedIn, (req, res) => {
     campgrounds.findById(req.params.id, (error, campground) => {
         if (error) {
             console.log(error);
@@ -91,7 +113,7 @@ app.get("/campground/:id/comment/new", (req, res) => {
 });
 
 // CREATE--COMMENT ROUTE
-app.post("/campground/:id/comment", (req, res) => {
+app.post("/campground/:id/comment", isLoggedIn, (req, res) => {
     campgrounds.findById(req.params.id, (error, foundCampground) => {
         if (error) {
             console.log(error);
@@ -109,6 +131,59 @@ app.post("/campground/:id/comment", (req, res) => {
         }
     });
 });
+
+// =========================
+// AUTHENTICATION ROUTES
+// =========================
+
+// SHOW--REGISTER FORM
+app.get("/register", (req, res) => {
+    res.render("Oauth/register");
+});
+
+// HANDLE SIGN UP CREDENTIAL
+app.post("/register", (req, res) => {
+    var newUser = new user({ username: req.body.username });
+    user.register(newUser, req.body.password, (error, user) => {
+        if (error) {
+            console.log(error);
+            return res.redirect("register");
+        }
+        passport.authenticate("local")(req, res, () => {
+            res.redirect("/campground");
+        })
+    })
+})
+
+// SHOW--LOGIN FORM
+app.get("/login", (req, res) => {
+    res.render("Oauth/login");
+});
+
+// HANDLE LOGIN CREDENTIALS
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/campground",
+    failureRedirect: "/login"
+}, (req, res) => { }));
+
+
+// LOGOUT ROUTE
+app.get("/logout", (req, res) => {
+    req.logOut();
+    res.redirect("/campground");
+});
+
+// =============
+// MIDDLEWARE 
+// =============
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
+
 
 
 // PORT AND SERVER INFO

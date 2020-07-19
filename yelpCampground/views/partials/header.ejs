@@ -14,8 +14,12 @@
     <nav class="navbar navbar-light bg-info justify-content-between">
         <a class="navbar-brand ml-3 text-white" href="/campground">Yelpcamp</a>
         <div class="mr-3">
-            <button class="btn btn-default">Login</button>
-            <button class="btn btn-default">Sign Up</button>
-            <button class="btn btn-default">Logout</button>
+            <%if(!currentUser){%>
+            <a class="btn btn-default text-white" href="/login">Login</a>
+            <a class="btn btn-default text-white" href="/register">Sign Up</a>
+            <% } else { %>
+            <a href="#">Signed in as <%= currentUser.username %></a>
+            <a class="btn btn-default text-white" href="/logout">Logout</a>
+            <% } %>
         </div>
     </nav>
