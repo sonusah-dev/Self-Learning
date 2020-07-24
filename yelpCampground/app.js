@@ -51,7 +51,7 @@ app.get("/campground", (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            res.render("campgrounds/campground", { campgrounds: allCampgrounds, currentUser: req.user });
+            res.render("campgrounds/campground", { campgrounds: allCampgrounds });
         }
     });
 });
@@ -164,7 +164,7 @@ app.get("/login", (req, res) => {
 app.post("/login", passport.authenticate("local", {
     successRedirect: "/campground",
     failureRedirect: "/login"
-}, (req, res) => { }));
+}));
 
 
 // LOGOUT ROUTE
