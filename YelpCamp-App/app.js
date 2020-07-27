@@ -4,7 +4,7 @@ var express = require("express"),
   bodyparser = require("body-parser"),
   mongoose = require("mongoose"),
   passport = require("passport"),
-  localStrategy = require("passport-local"),
+  LocalStrategy = require("passport-local").Strategy,
   methodOverride = require("method-override"),
   Campground = require("./models/Campground"),
   Comment = require("./models/Comment"),
@@ -35,7 +35,17 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new localStrategy(User.authenticate()));
+// passport.use(new localStrategy(User.authenticate()));
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -52,5 +62,5 @@ app.use("/campground/:id/comment", commentRoutes);
 
 // PORT AND SERVER INFO
 app.listen(3000, () => {
-  console.log("Yelpcamp server is running on port 3000");
+  console.log("Yelpcamp-App server running on port 3000!");
 });

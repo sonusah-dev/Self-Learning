@@ -38,10 +38,17 @@ router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/campground",
-    failureRedirect: "/",
+    failureRedirect: "/login"
   }),
   function (req, res) { }
 );
+
+// router.post('/login',
+//   passport.authenticate('local', { failureRedirect: '/login', }),
+//   function (req, res) {
+//     res.redirect('/');
+//   }
+// );
 
 // LOGOUT ROUTE
 router.get("/logout", (req, res) => {
