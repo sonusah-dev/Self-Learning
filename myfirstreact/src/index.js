@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <div style={{ textAlign: 'center', color: 'purple' }}>
+    <h1>REACT IS WORKING THOUGH</h1>
+    <p>We can almost do anything here</p>
+  </div>
+  ,
   document.getElementById('root')
 );
 
