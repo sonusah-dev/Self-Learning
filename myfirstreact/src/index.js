@@ -5,7 +5,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <div style={{ textAlign: 'center', color: 'purple' }}>
+  <div style={{ textAlign: 'center', color: 'white' }}>
     <h1>REACT IS WORKING THOUGH</h1>
     <p>We can almost do anything here</p>
   </div>

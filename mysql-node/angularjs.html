@@ -2,12 +2,19 @@
 <html>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <body>
-    <div ng-app="">
+    <div
+      ng-app=""
+      ng-init="Day='(Wednessday)';Date='11th November 2020';price=10;quantity=5;Name={firstName:'Sonu',lastName:'Sah'};marks=[90,88,70]"
+    >
       <p>Input something in the input box:</p>
       <p>Name: <input type="text" ng-model="name" /></p>
       <p>Business: <input type="text" ng-model="business" /></p>
       <p ng-bind="name"></p>
-      <p ng-bind="business"></p>
+      <p>{{ business }}</p>
+      <p>{{ Date+" "+Day }}</p>
+      <p>Price of 5 Appy juice is: {{ price * quantity }}</p>
+      <h4>{{ Name.firstName+" "+Name.lastName }}</h4>
+      <p>{{ marks[1] }}</p>
     </div>
   </body>
 </html>

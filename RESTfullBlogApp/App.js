@@ -1,7 +1,7 @@
 // DEPENDENCIES FOR OUR APP
 const bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
-    expressSantizer = require('express-sanitizer'),
+    expressSanitizer = require('express-sanitizer'),
     mongoose = require('mongoose'),
     express = require('express'),
     app = express();
@@ -9,7 +9,7 @@ const bodyParser = require('body-parser'),
 // BASIC APP CONFIGURATION
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use(expressSantizer());
+app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 
@@ -111,6 +111,6 @@ app.delete("/blogs/:id", (req, res) => {
 
 /////////////////////////// PORT AND SERVER CONFIG ///////////////////////////
 
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log("Blog App server is running on port:3000");
 });

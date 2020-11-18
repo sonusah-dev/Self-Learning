@@ -6,9 +6,8 @@ const express = require("express"),
 const users = [];
 
 app.use(express.json());
-app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({ extended: true }));
-
+app.set("view engine", "ejs");
 // ======================================================================================
 // ======================================================================================
 
@@ -17,8 +16,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  // res.render("register");
-  res.json(users);
+  res.render("register");
+  // res.json(users);
 });
 
 app.post("/register", async (req, res) => {
@@ -27,7 +26,7 @@ app.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user = { name: req.body.name, email: req.body.email, password: hashedPassword };
     users.push(user);
-    res.status(201).send();
+    res.status(201).send(user);
     // res.render("/login");
   } catch (err) {
     res.status(500).send(err);
@@ -39,7 +38,7 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const user = users.find((user) => user.email === req.body.email);
+  const user = users.find(user => user.email === req.body.email);
   if (user == null) {
     return res.status(400).send("User Not found");
   }

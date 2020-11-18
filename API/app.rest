@@ -1,0 +1,21 @@
+POST http://localhost:3000/register 
+content-type: application/json
+
+{
+    "name":"Sonu Sah",
+    "email":"popo@gradlic.com",
+    "gender":0,
+    "phone":9988678765,
+    "password":"password" 
+}
+###
+GET http://localhost:3000/
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email":"momo@gmail.com",
+    "password":"qwerty"
+}
